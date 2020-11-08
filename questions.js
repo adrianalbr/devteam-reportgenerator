@@ -1,5 +1,5 @@
 // questions for user that is building the team 
-
+const inquirer = require("inquirer");
 //MANAGER QUESTIONS
 
 const managerQuestions = [

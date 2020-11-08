@@ -16,7 +16,81 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 
++// Array of employees
 
+const employees = [];
+
+//create manager object
+
+function createManager() {
+
+    let managerResponses = inquirer.prompt(questions.manager);
+        let newManager = new Manager
+            (managerResponses.mgrName, managerResponses.mgrId, managerResponses.mgrEmail, managerResponses.mgrOffice);
+
+            employees.push(newManager);
+
+            console.log("You have created a new manager:", newManager);
+
+
+};
+
+function confirmEmployee() {
+
+    let confirmEmployee = inquirer.prompt(question.create);
+
+    switch (confirmEmployee.confirmEmp){
+        case false:
+            console.log("Here is your team so far: ",employees);
+            console.log("your page is being generated");
+            return;
+        case true:
+            createEmployee();
+    };
+};
+
+// Create Engineer or Intern
+function createEmployee() {
+
+    // add an Engineer or Intern?
+    let employeeRole = inquirer.prompt(questions.employee);
+
+    switch (employeeRole.empRole) {
+        case 'Engineer':
+            let engResponses = inquirer.prompt(questions.engineer);
+            let newEngineer = new Engineer
+                (engResponses.engName,
+                    engResponses.engId,
+                    engResponses.engEmail,
+                    engResponses.engGithub);
+            employees.push(newEngineer);
+            console.log("New engineer has been added to the team: ", newEngineer);
+            confirmEmployee();
+
+        case 'Intern':
+            let internResponses = inquirer.prompt(questions.intern);
+            let newIntern = new Intern
+                (internResponses.internName,
+                    internResponses.internId,
+                    internResponses.internEmail,
+                    internResponses.internSchool);
+            employees.push(newIntern);
+            console.log("New intern has been added to the team: ", newIntern);
+            confirmEmployee();
+    };
+
+};
+
+//Main function init
+
+function init() {
+
+    createManager();
+    confirmEmployee();
+
+};
+
+init();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)

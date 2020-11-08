@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/adrianalbr/devteam-reportgenerator#readme",
   "dependencies": {
+    "inquirer": "^7.3.3",
     "jest": "^26.6.3"
   }
 }
