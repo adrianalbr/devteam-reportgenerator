@@ -3,7 +3,7 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
-const questions = require('../questions');
+const questions = require("../questions");
 const render = require("./lib/htmlRenderer");
 
 // Packages
@@ -15,80 +15,83 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-
-+// Array of employees
+// Array of employees
 
 const employees = [];
 
 //create manager object
 
 function createManager() {
+  inquirer.prompt(questions.manager).then((managerResponses) => {
+    let newManager = new Manager(
+      managerResponses.mgrName,
+      managerResponses.mgrId,
+      managerResponses.mgrEmail,
+      managerResponses.mgrOffice
+    );
 
-    let managerResponses = inquirer.prompt(questions.manager);
-        let newManager = new Manager
-            (managerResponses.mgrName, managerResponses.mgrId, managerResponses.mgrEmail, managerResponses.mgrOffice);
+    employees.push(newManager);
 
-            employees.push(newManager);
-
-            console.log("You have created a new manager:", newManager);
-
-
-};
+    console.log("You have created a new manager:", newManager);
+    confirmEmployee();
+  });
+}
 
 function confirmEmployee() {
-
-    let confirmEmployee = inquirer.prompt(question.create);
-
-    switch (confirmEmployee.confirmEmp){
-        case false:
-            console.log("Here is your team so far: ",employees);
-            console.log("your page is being generated");
-            return;
-        case true:
-            createEmployee();
-    };
-};
+  inquirer.prompt(questions.create).then((confirmEmployee) => {
+    switch (confirmEmployee.confirmEmp) {
+      case false:
+        console.log("Here is your team so far: ", employees);
+        console.log("your page is being generated");
+        fs.writeFileSync(outputPath, render(employees), "utf-8");
+        return;
+      case true:
+        createEmployee();
+    }
+  });
+}
 
 // Create Engineer or Intern
 function createEmployee() {
-
-    // add an Engineer or Intern?
-    let employeeRole = inquirer.prompt(questions.employee);
-
+  // add an Engineer or Intern?
+  inquirer.prompt(questions.employee).then((employeeRole) => {
     switch (employeeRole.empRole) {
-        case 'Engineer':
-            let engResponses = inquirer.prompt(questions.engineer);
-            let newEngineer = new Engineer
-                (engResponses.engName,
-                    engResponses.engId,
-                    engResponses.engEmail,
-                    engResponses.engGithub);
-            employees.push(newEngineer);
-            console.log("New engineer has been added to the team: ", newEngineer);
-            confirmEmployee();
-
-        case 'Intern':
-            let internResponses = inquirer.prompt(questions.intern);
-            let newIntern = new Intern
-                (internResponses.internName,
-                    internResponses.internId,
-                    internResponses.internEmail,
-                    internResponses.internSchool);
-            employees.push(newIntern);
-            console.log("New intern has been added to the team: ", newIntern);
-            confirmEmployee();
-    };
-
-};
+      case "Engineer":
+        inquirer.prompt(questions.engineer).then((engResponses) => {
+          let newEngineer = new Engineer(
+            engResponses.engName,
+            engResponses.engId,
+            engResponses.engEmail,
+            engResponses.engGithub
+          );
+          employees.push(newEngineer);
+          console.log("New engineer has been added to the team: ", newEngineer);
+          confirmEmployee();
+        });
+        break;
+      case "Intern":
+        inquirer.prompt(questions.intern).then((internResponses) => {
+          let newIntern = new Intern(
+            internResponses.internName,
+            internResponses.internId,
+            internResponses.internEmail,
+            internResponses.internSchool
+          );
+          employees.push(newIntern);
+          console.log("New intern has been added to the team: ", newIntern);
+          confirmEmployee();
+        });
+        break;
+    }
+  });
+}
 
 //Main function init
 
 function init() {
-
-    createManager();
-    confirmEmployee();
-
-};
+  createManager();
+  // confirmEmployee();
+}
 
 init();
 
