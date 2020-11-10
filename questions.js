@@ -7,7 +7,7 @@ const managerQuestions = [
         type: 'input',
         message: "This application generates an HTML page for your software development team. A Dev team consists of a manager and any number of engineers and interns. Let's start with a manager - What is your manager's name?",
         name: 'mgrName',
-        default: 'Albus Percival Wulfric Brian Dumbledore',
+        default: 'Albus Dumbledore',
         validate: function (answer) {
             if (answer.length < 1) {
                 return console.log("A valid name is required.");
