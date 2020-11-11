@@ -18,8 +18,4 @@ class Intern extends Employee {
     }
 }
 
-// const intern = new Intern()
-// intern.getRole();
-// intern.getSchool();
-
 module.exports = Intern;

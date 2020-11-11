@@ -17,8 +17,4 @@ class Engineer extends Employee {
     }
 }
 
-// const engineer = new Engineer()
-// engineer.getRole();
-// engineer.getGithub();
-
 module.exports = Engineer;

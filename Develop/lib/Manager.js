@@ -17,8 +17,4 @@ class Manager extends Employee {
     }
 }
 
-// const manager = new Manager()
-// manager.getRole();
-// manager.getOfficeNumber();
-
 module.exports = Manager;
